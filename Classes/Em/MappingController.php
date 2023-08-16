@@ -284,10 +284,10 @@ CSS;
             ->listTableColumns('sys_file_metadata');
         foreach ($fields as $field => $_) {
             switch (true) {
-                case GeneralUtility::isFirstPartOfStr($field, 't3ver_'):
-                case GeneralUtility::isFirstPartOfStr($field, 't3_'):
-                case GeneralUtility::isFirstPartOfStr($field, 'l10n_'):
-                case GeneralUtility::isFirstPartOfStr($field, 'zzz_deleted_'):
+                case str_starts_with($field, 't3ver_'):
+                case str_starts_with($field, 't3_'):
+                case str_starts_with($field, 'l10n_'):
+                case str_starts_with($field, 'zzz_deleted_'):
                 case in_array($field, ['uid', 'pid', 'tstamp', 'crdate', 'cruser_id', 'file', 'sys_language_uid', 'fe_groups']):
                     // Nothing to do
                     break;

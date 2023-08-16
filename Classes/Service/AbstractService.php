@@ -71,6 +71,7 @@ abstract class AbstractService implements ServiceInterface
      */
     public function extractMetadata(File $file)
     {
+
         static::getLogger()->debug(
             'Extracting metadata',
             [

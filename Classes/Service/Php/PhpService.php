@@ -19,6 +19,7 @@ use Causal\Extractor\Utility\ColorSpace;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * A PhpService service implementation.
@@ -85,6 +86,7 @@ class PhpService extends AbstractService
      */
     public function getSupportedFileExtensions()
     {
+
         return array_merge(
             $this->imageExtensions,
             $this->officeDocumentExtensions,
@@ -134,17 +136,18 @@ class PhpService extends AbstractService
 
         $metadata = [];
 
-        $zip = zip_open($fileName);
-        if (is_resource($zip)) {
-            while (($zipEntry = zip_read($zip)) !== false) {
-                $entryName = zip_entry_name($zipEntry);
+        $zip = new \ZipArchive();
+        $result = $zip->open($fileName, \ZipArchive::RDONLY);
+        if ($result === TRUE) {
+            for($i = 0; $i < $zip->numFiles; $i++) {
+                $entryName = $zip->getNameIndex($i);
                 if ($entryName === 'docProps/core.xml' || $entryName === 'docProps/app.xml') {
-                    $contents = zip_entry_read($zipEntry, zip_entry_filesize($zipEntry));
+                    $contents = $zip->getFromIndex($i);
                     $data = GeneralUtility::xml2array($contents);
                     $metadata = array_merge_recursive($metadata, $data);
                 }
             }
-            zip_close($zip);
+            $zip->close();
         }
 
         return $metadata;

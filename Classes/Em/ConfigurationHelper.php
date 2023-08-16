@@ -39,7 +39,7 @@ class ConfigurationHelper extends AbstractConfigurationField
     {
         $html = $this->createFormInputField([
             'name' => $params['fieldName'],
-            'id' => 'em-' . $params['propertyName'],
+            'id' => 'em-' . ($params['propertyName'] ?? ''),
             'class' => 'form-control',
             'placeholder' => '/path/to/tika-app-x.x.jar',
             'value' => $params['fieldValue'],
@@ -82,7 +82,7 @@ class ConfigurationHelper extends AbstractConfigurationField
     {
         $html = $this->createFormInputField([
             'name' => $params['fieldName'],
-            'id' => 'em-' . $params['propertyName'],
+            'id' => 'em-' . ($params['propertyName'] ?? ''),
             'class' => 'form-control',
             'placeholder' => 'localhost',
             'value' => $params['fieldValue'],
@@ -128,8 +128,8 @@ class ConfigurationHelper extends AbstractConfigurationField
      */
     public function createToolInput(array $params, $pObj)
     {
-        $externalTool = explode('_', $params['propertyName']);
-        $externalTool = $externalTool[1];
+        $externalTool = explode('_', ($params['propertyName'] ?? ''));
+        $externalTool = ($externalTool[1] ?? '');
 
         if (empty($params['fieldValue'])) {
             // Try to find the external tool on our own
@@ -141,7 +141,7 @@ class ConfigurationHelper extends AbstractConfigurationField
 
         $html = $this->createFormInputField([
             'name' => $params['fieldName'],
-            'id' => 'em-' . $params['propertyName'],
+            'id' => 'em-' . ($params['propertyName'] ?? ''),
             'class' => 'form-control',
             'placeholder' => '/path/to/' . $externalTool,
             'value' => $params['fieldValue'],

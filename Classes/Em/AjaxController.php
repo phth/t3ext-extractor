@@ -206,7 +206,7 @@ class AjaxController
         /** @var \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory */
         $resourceFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\ResourceFactory::class);
 
-        if (GeneralUtility::isFirstPartOfStr($reference, $extensionPrefix)) {
+        if (str_starts_with($reference, $extensionPrefix)) {
             $fileName = substr($reference, strlen($extensionPrefix));
             $recordData = [
                 'uid' => 0,

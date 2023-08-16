@@ -34,7 +34,7 @@ abstract class AbstractConfigurationField
      */
     protected function translate($id, $hsc = false, array $arguments = null)
     {
-        if (!GeneralUtility::isFirstPartOfStr($id, 'LLL:EXT:')) {
+        if (!str_starts_with($id, 'LLL:EXT:')) {
             $reference = 'LLL:EXT:extractor/Resources/Private/Language/locallang_em.xlf:' . $id;
         } else {
             $reference = $id;
